@@ -1,0 +1,29 @@
+
+name: Basic GitHub Actions Practice
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  basic-actions:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Print a greeting
+        run: echo "Hello! My first GitHub Actions workflow is running."
+
+      - name: Display date
+        run: date
+
+      - name: Display current directory
+        run: pwd
+
+      - name: List files
+        run: ls -la
+
+      - name: Check operating system
+        run: uname -a
+
+      - name: Display success message
+        run: echo "All basic steps completed successfully!"
