@@ -27,3 +27,12 @@ jobs:
 
       - name: Display success message
         run: echo "All basic steps completed successfully!"
+   
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.x'
+
+      - name: Run Python script
+        run: python hello.py
+
