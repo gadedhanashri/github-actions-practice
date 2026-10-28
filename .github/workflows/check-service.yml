@@ -1,0 +1,15 @@
+
+name: Check Windows Service
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check-service:
+    runs-on: windows-latest
+
+    steps:
+      - name: Check Spooler service
+        shell: pwsh
+        run: |
+          Get-Service -Name Spooler
