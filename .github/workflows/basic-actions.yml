@@ -28,19 +28,20 @@ jobs:
       - name: Display success message
         run: echo "All basic steps completed successfully!"
    
+     
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
           python-version: '3.x'
-      
+
       - name: Debug repository files
         run: |
           echo "Current directory:"
           pwd
-          echo "Files in current directory:"
+          echo "Root directory contents:"
           ls -la
-          echo "Searching for hello.py:"
-          find . -name "hello.py"
+          echo "Find hello.py:"
+          find . -type f -name "hello.py"
 
       - name: Run Python script
         run: python hello.py
