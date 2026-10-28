@@ -1,0 +1,56 @@
+
+name: Windows Process Monitoring
+
+on:
+  workflow_dispatch:
+
+jobs:
+  process-monitor:
+    runs-on: windows-latest
+
+    steps:
+      - name: Display runner information
+        shell: pwsh
+        run: |
+          Write-Host "Windows Process Monitoring Started"
+          Write-Host "Computer: $env:COMPUTERNAME"
+          Write-Host "Operating System:"
+          Get-CimInstance Win32_OperatingSystem |
+            Select-Object Caption
+
+      - name: Identify top 5 CPU processes
+        shell: pwsh
+        run: |
+          Write-Host "Top 5 processes by accumulated CPU time"
+
+          Get-Process |
+            Sort-Object CPU -Descending |
+            Select-Object -First 5 `
+              ProcessName,
+              Id,
+              @{Name='CPUSeconds'; Expression={
+                if ($null -eq $_.CPU) { 0 } else {
+                  [math]::Round($_.CPU, 2)
+                }
+              }} |
+            Format-Table -AutoSize
+
+      - name: Identify top 5 memory processes
+        shell: pwsh
+        run: |
+          Write-Host "Top 5 processes by memory usage"
+
+          Get-Process |
+            Sort-Object WorkingSet64 -Descending |
+            Select-Object -First 5 `
+              ProcessName,
+              Id,
+              @{Name='MemoryMB'; Expression={
+                [math]::Round($_.WorkingSet64 / 1MB, 2)
+              }} |
+            Format-Table -AutoSize
+
+      - name: Monitoring completed
+        shell: pwsh
+        run: |
+          Write-Host "Process monitoring completed successfully."
