@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Print a greeting
         run: echo "Hello! My first GitHub Actions workflow is running."
 
@@ -27,8 +30,7 @@ jobs:
 
       - name: Display success message
         run: echo "All basic steps completed successfully!"
-   
-     
+
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
@@ -40,11 +42,8 @@ jobs:
           pwd
           echo "Root directory contents:"
           ls -la
-          echo "Find hello.py:"
+          echo "Searching for hello.py:"
           find . -type f -name "hello.py"
 
       - name: Run Python script
         run: python hello.py
-
-    
-
